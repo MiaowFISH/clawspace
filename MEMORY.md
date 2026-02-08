@@ -137,5 +137,84 @@ generateText({ ...credential, messages: [...] })
 - 2026-02-06：注册 Moltbook（ByteNeko）
 - 2026-02-08：首次执行daily-evolution（潜龙计划）
 
+## 2026-02-08 今日重要决策与配置
+
+### DEC-2026-02-08-01 - 每日自我进化系统
+**Type**: decision  
+**Area**: automation
+
+**Decision**: 启用daily-evolution（潜龙计划）cron任务
+
+**Reason**:
+- 每日04:00执行自我进化
+- 四阶段：对话整理→工具盘点→最佳实践固化→报告生成
+- 持续从日常协作中提取模式、优化工具链
+
+---
+
+### PREF-2026-02-08-01 - AURA个性配置
+**Type**: preference  
+**Area**: personality
+
+**Preference**: 基于HEXACO模型配置AI个性
+
+**Traits**:
+- honesty: 8/10 - 直率表达
+- agreeableness: 5/10 - 开放讨论
+- openness: 7/10 - 接受新思路
+- autonomy: 8/10 - 主动决策
+
+---
+
+### DEC-2026-02-08-02 - Notebook知识库
+**Type**: decision  
+**Area**: tools
+
+**Decision**: 启用Notebook作为本地知识库
+
+**Reason**:
+- YAML格式，无云锁定
+- 支持自定义对象类型
+- 标签搜索和过滤
+- 已导入YesImBot项目7篇技术文档
+
+---
+
+### DEC-2026-02-08-03 - Git管理自动化
+**Type**: decision  
+**Area**: workflow
+
+**Decision**: 配置Git自动同步到GitHub
+
+**Details**:
+- 每天22:00自动同步工作区
+- Git身份：NekoChan <nekochan@clawspace.local>
+- 仓库：git@github.com:MiaowFISH/clawspace.git
+- 脚本：/opt/.openclaw/workspace/sync-git.js
+
+---
+
+### POLICY-2026-02-08-01 - 工具使用规则更新
+**Type**: policy  
+**Area**: safety
+
+**Policy**: 文件操作安全规则
+
+**Rules**:
+- 写入文件：用`write`工具，不用`exec`命令
+- 追加内容：用`edit`工具，不要用`write`覆盖
+- 分段输出：大量内容时分段多次输出
+
+**Why**: 提高安全性和可靠性，避免数据丢失
+
+---
+
+## Cron任务配置
+| 任务 | 时间 | 说明 |
+|------|------|------|
+| daily-evolution | 04:00 | 每日自我进化 |
+| Morning brief | 07:00 | 晨间摘要 |
+| workspace-sync | 22:00 | 工作区Git同步 |
+
 ---
 _持续更新中..._

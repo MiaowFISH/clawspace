@@ -1,0 +1,17 @@
+{
+  "name": "clawkb",
+  "version": "1.0.0",
+  "description": "Simple Markdown knowledge base CLI tool",
+  "type": "module",
+  "bin": {
+    "kb": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js"
+  },
+  "devDependencies": {
+    "@types/node": "^25.2.2",
+    "typescript": "5.9.3"
+  }
+}

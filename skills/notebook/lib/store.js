@@ -211,7 +211,7 @@ function createObject(typeName, data) {
     id,
     type: typeName,
     title: object.title || object.name || `Untitled ${typeName}`,
-    tags: object.tags || []
+    tags: Array.isArray(object.tags) ? object.tags : (object.tags ? object.tags.split(',').map(t => t.trim()).filter(Boolean) : [])
   });
   saveIndex(index);
   
@@ -268,9 +268,10 @@ function listObjects(typeName, filters = {}) {
   }
   if (filters.tags) {
     const tagFilters = Array.isArray(filters.tags) ? filters.tags : [filters.tags];
-    objects = objects.filter(o => 
-      tagFilters.some(t => o.tags?.includes(t))
-    );
+    objects = objects.filter(o => {
+      const tags = Array.isArray(o.tags) ? o.tags : [];
+      return tagFilters.some(t => tags.includes(t));
+    });
   }
   
   return objects;
@@ -285,7 +286,8 @@ function searchObjects(query) {
     // Check title
     if (o.title?.toLowerCase().includes(q)) return true;
     // Check tags
-    if (o.tags?.some(t => t.toLowerCase().includes(q))) return true;
+    const tags = Array.isArray(o.tags) ? o.tags : [];
+    if (tags.some(t => t.toLowerCase().includes(q))) return true;
     return false;
   });
 }

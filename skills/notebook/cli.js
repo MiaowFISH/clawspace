@@ -25,7 +25,8 @@ function printObject(obj, typeName) {
   }
   
   if (obj.tags?.length) {
-    console.log(`   Tags: ${obj.tags.join(', ')}`);
+    const tags = Array.isArray(obj.tags) ? obj.tags : [];
+    console.log(`   Tags: ${tags.join(', ')}`);
   }
 }
 
@@ -39,7 +40,8 @@ function printList(objects, title = 'Objects') {
   objects.forEach(o => {
     const icon = o.type === 'project' ? '📁' : o.type === 'task' ? '✅' : '💡';
     console.log(`  ${icon} [${o.type}] ${o.title || o.name}`);
-    if (o.tags?.length) console.log(`        Tags: ${o.tags.join(', ')}`);
+    const tags = Array.isArray(o.tags) ? o.tags : [];
+    if (tags.length) console.log(`        Tags: ${tags.join(', ')}`);
   });
 }
 

@@ -6,6 +6,7 @@ export function serializeFrontmatter(fm) {
         `tags: [${fm.tags.map((t) => `"${t}"`).join(", ")}]`,
         `created: "${fm.created}"`,
         FRONTMATTER_DELIMITER,
+        "",
     ];
     return lines.join("\n");
 }
@@ -31,7 +32,7 @@ export function parseFrontmatter(raw) {
     const title = stripQuotes(fmMap.get("title") ?? "");
     const tags = parseTags(fmMap.get("tags") ?? "[]");
     const created = stripQuotes(fmMap.get("created") ?? "");
-    const content = lines.slice(closingIdx + 1).join("\n").trim();
+    const content = lines.slice(closingIdx + 1).join("\n");
     return {
         frontmatter: { title, tags, created },
         content,

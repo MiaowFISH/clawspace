@@ -28,6 +28,10 @@
     "openclaw-mem": {
       "version": "2.1.0",
       "installedAt": 1770565486777
+    },
+    "brainrepo": {
+      "version": "1.0.0",
+      "installedAt": 1770569812315
     }
   }
 }

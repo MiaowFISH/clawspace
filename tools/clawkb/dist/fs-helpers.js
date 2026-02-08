@@ -14,7 +14,7 @@ export function getTopicDir(topic) {
 export function getEntryPath(topic, title) {
     const slug = title
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/[^\w\u4e00-\u9fa5]+/g, "-")
         .replace(/^-|-$/g, "");
     return path.join(getTopicDir(topic), `${slug}.md`);
 }

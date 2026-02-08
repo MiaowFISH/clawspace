@@ -4,6 +4,14 @@ import { ensureDir, getEntryPath, getTopicDir } from "./fs-helpers.js";
 import type { Frontmatter } from "./types.js";
 
 export function add(topic: string, title: string, tags: string[] = []): string {
+  // Validate inputs
+  if (!topic || topic.trim() === "") {
+    throw new Error("Topic cannot be empty");
+  }
+  if (!title || title.trim() === "") {
+    throw new Error("Title cannot be empty");
+  }
+
   const topicDir = getTopicDir(topic);
   ensureDir(topicDir);
 

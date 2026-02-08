@@ -1,0 +1,32 @@
+# OpenClaw
+.claude/
+.openclaw/
+
+# Dependencies
+node_modules/
+*.log
+package-lock.json
+yarn.lock
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.bak
+
+# Sensitive data
+credentials/
+*.key
+*.secret
+.env
+
+# Notebook data (large files)
+notebook/objects/

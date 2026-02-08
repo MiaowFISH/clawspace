@@ -1,0 +1,25 @@
+types:
+  - name: doc
+    fields:
+      - name: title
+        type: text
+        required: true
+      - name: category
+        type: text
+        required: true
+      - name: status
+        type: select
+        options:
+          - draft
+          - review
+          - final
+        required: true
+      - name: summary
+        type: longtext
+        required: true
+      - name: content
+        type: longtext
+        required: true
+      - name: tags
+        type: text
+        required: true

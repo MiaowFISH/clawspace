@@ -1,52 +1,84 @@
 {
   "objects": [
     {
-      "id": "mldthgfh",
-      "type": "doc",
-      "title": "测试文档",
-      "tags": "test"
-    },
-    {
-      "id": "mldtihgo",
+      "id": "mldwx8my",
       "type": "doc",
       "title": "模块化模型服务架构",
-      "tags": "architecture,model,provider,xsai,registry"
+      "tags": [
+        "architecture",
+        "model",
+        "provider",
+        "xsai",
+        "registry"
+      ]
     },
     {
-      "id": "mldtihgu",
+      "id": "mldwx8n2",
       "type": "doc",
       "title": "异步任务系统",
-      "tags": "async,task,job,worker"
+      "tags": [
+        "async",
+        "task",
+        "job",
+        "worker"
+      ]
     },
     {
-      "id": "mldtihh1",
+      "id": "mldwx8n4",
       "type": "doc",
       "title": "智能体记忆系统演进",
-      "tags": "memory,agent,evolution,L1,L2,L3"
+      "tags": [
+        "memory",
+        "agent",
+        "evolution",
+        "L1",
+        "L2",
+        "L3"
+      ]
     },
     {
-      "id": "mldtihh4",
+      "id": "mldwx8n7",
       "type": "doc",
       "title": "系统架构重审",
-      "tags": "architecture,refactor,design"
+      "tags": [
+        "architecture",
+        "refactor",
+        "design"
+      ]
     },
     {
-      "id": "mldtihh6",
+      "id": "mldwx8n8",
       "type": "doc",
       "title": "工具调用范式与心跳循环",
-      "tags": "tool,heartbeat,paradigm,cycle"
+      "tags": [
+        "tool",
+        "heartbeat",
+        "paradigm",
+        "cycle"
+      ]
     },
     {
-      "id": "mldtihh7",
+      "id": "mldwx8n9",
       "type": "doc",
       "title": "拟人化唤醒与自主机制",
-      "tags": "human,wakeup,autonomy,trigger"
+      "tags": [
+        "human",
+        "wakeup",
+        "autonomy",
+        "trigger"
+      ]
     },
     {
-      "id": "mldtihh9",
+      "id": "mldwx8nb",
       "type": "doc",
       "title": "记忆检索方案",
-      "tags": "memory,retrieval,search,vector,embed"
+      "tags": [
+        "memory",
+        "retrieval",
+        "search",
+        "vector",
+        "embed"
+      ]
     }
   ]
 }

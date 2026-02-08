@@ -34,7 +34,7 @@ console.log('📝 Changes detected, committing...');
 // Add all changes
 run('git add .');
 
-// Commit with timestamp
+// Commit with timestamp (NekoChan identity already set in git config)
 const timestamp = new Date().toISOString();
 const message = `Auto-commit: ${timestamp}`;
 run(`git commit -m "${message}"`);

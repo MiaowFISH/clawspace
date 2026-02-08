@@ -114,6 +114,22 @@
 
 ---
 
+## DEC-2026-02-09-02 - 知识管理工具选择
+**Type**: decision
+**Area**: tools
+
+**Decision**: 使用clawkb作为主要知识管理工具
+
+**Reason**:
+- 完整的中文支持（标题、标签、内容）
+- Markdown格式，便于直接编辑和版本控制
+- 零依赖，只使用Node.js标准库
+- 12个完整命令，覆盖CRUD和导出导入
+
+**Note**: notebook保留用于结构化数据存储（如YesImBot项目文档）
+
+---
+
 ## FACT-2026-02-08-01 - 系统健康与安全
 **Type**: fact
 **Area**: security

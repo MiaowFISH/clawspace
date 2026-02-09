@@ -20,7 +20,7 @@
 
 ### 工作区同步（每天晚上22:00）
 - 检查工作区是否有改动
-- 如果有改动，执行 `node /opt/.openclaw/workspace/sync-git.js`
+- 如果有改动，执行 `node /opt/.openclaw/workspace/scripts/sync-git.js`
 - 提交并推送到git remote
 
 ### 系统健康检查（每周一次）

@@ -30,3 +30,5 @@ credentials/
 
 # Notebook data (large files)
 notebook/objects/
+# Knowledge base data
+knowledge/

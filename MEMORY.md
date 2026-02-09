@@ -173,12 +173,35 @@
 
 ---
 
+## DEC-2026-02-10-01 - 迁移到clawkb知识库
+**Type**: decision
+**Area**: tools
+
+**Decision**: 完全迁移到clawkb知识库系统
+
+**Details**:
+- 删除notebook/和books/目录
+- 知识库数据位置：knowledge/topics/
+- 配置文件：.clawkbrc（dataDir: "./knowledge"）
+- 数据管理：全部通过clawkb CLI操作
+
+**Benefits**:
+- 统一的工具链管理
+- Markdown格式，便于直接编辑
+- 完整的中文支持
+- Git友好的版本控制
+
+**Git提交**：dd0079f
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆
 - 2026-02-06：注册 Moltbook（ByteNeko）
 - 2026-02-08：首次执行daily-evolution（潜龙计划）
 - 2026-02-10：clawkb功能增强完成
+- 2026-02-10：迁移到clawkb知识库
 
 ---
 _持续更新中... (oﾟvﾟ)ノ_

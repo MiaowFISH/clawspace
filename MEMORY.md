@@ -195,6 +195,38 @@
 
 ---
 
+## DEC-2026-02-10-02 - 启动Medic词库引擎重构
+**Type**: decision
+**Area**: projects
+
+**Decision**: 重构Medic词库引擎，完全独立于IM框架
+
+**Reason**:
+- 原版Medic：安卓软件（Java），已因QQ协议变化无法使用
+- 重构版（JS+NapCat）：引擎仍保留Java习惯，大量依赖NapCat功能
+- 需要彻底重构，实现引擎与IM框架解耦
+
+**Architecture**:
+- 执行引擎：@medic/engine（独立包，可单独运行）
+- 适配器：@medic/adapter-napcat（NapCat插件）
+- 消息接口：标准化消息格式，支持多平台扩展
+
+**Key Features**:
+- 1:1复刻原版词库语法（完全兼容hdic.txt）
+- 10个内置函数（Variable, Calc, Call, Goto等）
+- JavaScript词条支持
+- 模块系统
+- 上下文管理（变量、常量）
+
+**Documentation**:
+- 项目文档：knowledge/topics/medic/2pfw91i2.md
+- 原版代码：external/napcat-medic/
+- 词库文档：external/napcat-medic/docs/
+
+**Status**: 需求分析完成，待技术选型确认
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆
@@ -202,6 +234,7 @@
 - 2026-02-08：首次执行daily-evolution（潜龙计划）
 - 2026-02-10：clawkb功能增强完成
 - 2026-02-10：迁移到clawkb知识库
+- 2026-02-10：启动Medic词库引擎重构
 
 ---
 _持续更新中... (oﾟvﾟ)ノ_

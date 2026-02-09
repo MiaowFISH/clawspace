@@ -32,3 +32,5 @@ credentials/
 notebook/objects/
 # Knowledge base data
 knowledge/
+
+external/

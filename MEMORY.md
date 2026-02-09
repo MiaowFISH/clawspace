@@ -141,11 +141,27 @@
 
 ---
 
+## FACT-2026-02-10-01 - clawkb功能增强
+**Type**: fact
+**Area**: tools
+
+**新功能**：
+- **配置系统**：`.clawkbrc`文件（JSON格式），支持`dataDir`和`maxIdLength`
+- **ID系统**：每篇文章唯一8位ID（a-z0-9），文件名格式为`<topic>/<id>.md`
+- **迁移工具**：`kb migrate`命令自动转换旧格式到新格式
+- **自动补全**：支持bash/zsh的ID/topic补全
+- **双模式查询**：支持`kb get <id>`和传统方式`kb get <topic> <title>`
+
+**Git提交**：2da7067
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆
 - 2026-02-06：注册 Moltbook（ByteNeko）
 - 2026-02-08：首次执行daily-evolution（潜龙计划）
+- 2026-02-10：clawkb功能增强完成
 
 ---
 _持续更新中... (oﾟvﾟ)ノ_

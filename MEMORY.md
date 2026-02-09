@@ -156,6 +156,23 @@
 
 ---
 
+## FACT-2026-02-10-02 - 配置文件搜索路径修复
+**Type**: fact
+**Area**: tools
+
+**修复内容**：.clawkbrc文件多路径搜索
+1. 当前目录 (process.cwd())
+2. Workspace目录 (/opt/.openclaw/workspace)
+3. 用户主目录 (~)
+
+**改进**：
+- dataDir相对路径相对于配置文件所在目录解析
+- .clawkbrc加入.gitignore（本地配置）
+
+**Git提交**：10d7f10
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆

@@ -16,18 +16,19 @@ workspace/
 ├── TOOLS.md            # 本地工具笔记
 ├── IDENTITY.md         # 喵酱的身份卡
 ├── AURA.yaml           # AURA个性配置
-├── books/              # 技术文档和设计笔记
+├── knowledge/          # 知识库（clawkb管理）
+│   └── topics/         # 按主题分类的笔记
 ├── memory/             # 每日记忆记录
-├── notebook/           # 本地知识库（YAML格式）
 ├── reports/            # 每日进化报告
+├── scripts/            # 自动化脚本
+│   └── sync-git.js     # Git自动同步脚本
 ├── skills/             # OpenClaw技能
 │   ├── aura/            # AURA个性配置
-│   ├── coding-opencode/  # 编码助手
 │   ├── daily-evolution/ # 每日自我进化
 │   ├── deep-framework/   # D.E.E.P.框架
-│   ├── deepwiki/        # DeepWiki查询
-│   └── notebook/        # 知识库工具
-└── sync-git.js         # Git自动同步脚本
+│   └── deepwiki/        # DeepWiki查询
+└── tools/              # 开发工具（Yarn workspaces）
+    └── clawkb/          # 知识库CLI工具
 ```
 
 ## 🎯 核心配置
@@ -52,13 +53,13 @@ workspace/
 | Morning brief | 07:00 UTC+8 | 晨间摘要 |
 | workspace-sync | 22:00 UTC+8 | 同步工作区到Git |
 
-## 📚 Notebook知识库
+## 📚 知识库
 
-使用notebook技能管理本地知识：
-- 支持自定义对象类型
-- YAML格式，无云锁定
-- 标签搜索和过滤
-- 对象链接功能
+使用clawkb工具管理本地知识：
+- Markdown格式，Git友好
+- 每篇文章唯一ID，支持标签系统
+- 完整的中文支持
+- 导入导出JSON
 
 目前已导入：
 - YesImBot项目文档（7篇）
@@ -68,7 +69,7 @@ workspace/
 
 每天22:00自动执行：
 ```bash
-node /opt/.openclaw/workspace/sync-git.js
+node /opt/.openclaw/workspace/scripts/sync-git.js
 ```
 
 脚本会：
@@ -109,7 +110,8 @@ node /opt/.openclaw/workspace/sync-git.js
 - **Runtime**: OpenClaw + Node.js v24.13.0
 - **Model**: zai/glm-4.7
 - **Channel**: Telegram
-- **Skills**: 6个（aura, coding-opencode, daily-evolution, deep-framework, deepwiki, notebook）
+- **Skills**: 5个（aura, daily-evolution, deep-framework, deepwiki）
+- **Tools**: clawkb（知识库CLI）
 
 ## 📝 使用说明
 
@@ -120,12 +122,13 @@ node /opt/.openclaw/workspace/sync-git.js
 git clone git@github.com:MiaowFISH/clawspace.git
 cd clawspace
 
-# 查看技能
-cd skills/notebook
-node cli.js list
+# 使用clawkb知识库
+cd tools/clawkb
+npm run build
+node dist/cli.js list
 
-# 运行每日进化
-node /path/to/daily-evolution/skill.js
+# 运行每日进化（需要OpenClaw环境）
+# 每日04:00自动执行，无需手动触发
 ```
 
 ### 自动同步
@@ -134,7 +137,7 @@ node /path/to/daily-evolution/skill.js
 
 手动触发：
 ```bash
-node /opt/.openclaw/workspace/sync-git.js
+node /opt/.openclaw/workspace/scripts/sync-git.js
 ```
 
 ## ⚠️ 重要约定
@@ -146,4 +149,4 @@ node /opt/.openclaw/workspace/sync-git.js
 
 ---
 
-_持续迭代中... (oﾟvﾟ)ノ_
+_持续迭代中... (oﾟvﾟ)诺_

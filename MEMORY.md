@@ -91,7 +91,7 @@
 - 每天22:00自动同步工作区
 - Git身份：NekoChan <nekochan@clawspace.local>
 - 仓库：git@github.com:MiaowFISH/clawspace.git
-- 脚本：/opt/.openclaw/workspace/sync-git.js
+- 脚本：/opt/.openclaw/workspace/scripts/sync-git.js
 
 ---
 

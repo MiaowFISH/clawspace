@@ -12,6 +12,7 @@ import { addTag } from "./cmd-tag.js";
 import { move } from "./cmd-mv.js";
 import { exportToJSON } from "./cmd-export.js";
 import { importFromJSON } from "./cmd-import.js";
+import { migrate } from "./cmd-migrate.js";
 
 let args = process.argv.slice(2);
 
@@ -28,14 +29,19 @@ function printUsage(): void {
   console.log("  kb add <topic> <title> [--tags tag1,tag2]");
   console.log("  kb list [topic]");
   console.log("  kb search <query>");
-  console.log("  kb get <topic> <title>");
-  console.log("  kb edit <topic> <title>");
-  console.log("  kb delete <topic> <title>");
-  console.log("  kb tag <topic> <title> <tag>");
+  console.log("  kb get <id>                    # Get by ID");
+  console.log("  kb get <topic> <title>         # Get by topic and title");
+  console.log("  kb edit <id>                   # Edit by ID");
+  console.log("  kb edit <topic> <title>        # Edit by topic and title");
+  console.log("  kb delete <id>                 # Delete by ID");
+  console.log("  kb delete <topic> <title>      # Delete by topic and title");
+  console.log("  kb tag <id> <tag>              # Tag by ID");
+  console.log("  kb tag <topic> <title> <tag>   # Tag by topic and title");
   console.log("  kb mv <topic> <title> <new-topic>");
   console.log("  kb export [output-file]");
   console.log("  kb import <file>");
   console.log("  kb stats");
+  console.log("  kb migrate                     # Migrate old files to ID format");
 }
 
 function parseTagsFlag(flagArgs: string[]): string[] {
@@ -70,7 +76,8 @@ function handleList(): void {
 
   for (const entry of entries) {
     const tags = entry.frontmatter.tags.join(", ");
-    console.log(`[${entry.topic}] ${entry.frontmatter.title} (${tags})`);
+    const id = entry.frontmatter.id || "no-id";
+    console.log(`[id:${id}] [${entry.topic}] ${entry.frontmatter.title} (${tags})`);
   }
 
   console.log(`\nTotal: ${entries.length} entries`);
@@ -105,30 +112,30 @@ function handleSearch(): void {
 }
 
 function handleEdit(): void {
-  const topic = args[1];
+  const topicOrId = args[1];
   const title = args[2];
 
-  if (!topic || !title) {
-    console.error("Error: kb edit requires <topic> and <title>");
+  if (!topicOrId) {
+    console.error("Error: kb edit requires <id> or <topic> <title>");
     printUsage();
     process.exit(1);
   }
 
-  edit(topic, title);
-  console.log(`Edited: ${topic}/${title}`);
+  edit(topicOrId, title);
+  console.log(`Edited successfully`);
 }
 
 function handleDelete(): void {
-  const topic = args[1];
+  const topicOrId = args[1];
   const title = args[2];
 
-  if (!topic || !title) {
-    console.error("Error: kb delete requires <topic> and <title>");
+  if (!topicOrId) {
+    console.error("Error: kb delete requires <id> or <topic> <title>");
     printUsage();
     process.exit(1);
   }
 
-  const filePath = deleteEntry(topic, title);
+  const filePath = deleteEntry(topicOrId, title);
   console.log(`Deleted: ${filePath}`);
 }
 
@@ -162,17 +169,18 @@ function handleStats(): void {
 }
 
 function handleGet(): void {
-  const topic = args[1];
+  const topicOrId = args[1];
   const title = args[2];
 
-  if (!topic || !title) {
-    console.error("Error: kb get requires <topic> and <title>");
+  if (!topicOrId) {
+    console.error("Error: kb get requires <id> or <topic> <title>");
     printUsage();
     process.exit(1);
   }
 
-  const entry = get(topic, title);
+  const entry = get(topicOrId, title);
   console.log(`\n[${entry.topic}] ${entry.frontmatter.title}`);
+  console.log(`ID: ${entry.frontmatter.id}`);
   console.log(`Tags: ${entry.frontmatter.tags.join(", ")}`);
   console.log(`Created: ${entry.frontmatter.created}`);
   console.log(`File: ${entry.filePath}`);
@@ -181,18 +189,18 @@ function handleGet(): void {
 }
 
 function handleTag(): void {
-  const topic = args[1];
-  const title = args[2];
+  const topicOrId = args[1];
+  const titleOrTag = args[2];
   const tag = args[3];
 
-  if (!topic || !title || !tag) {
-    console.error("Error: kb tag requires <topic>, <title>, and <tag>");
+  if (!topicOrId || !titleOrTag) {
+    console.error("Error: kb tag requires <id> <tag> or <topic> <title> <tag>");
     printUsage();
     process.exit(1);
   }
 
-  addTag(topic, title, tag);
-  console.log(`Added tag "${tag}" to ${topic}/${title}`);
+  addTag(topicOrId, titleOrTag, tag);
+  console.log(`Added tag successfully`);
 }
 
 function handleMove(): void {
@@ -228,6 +236,14 @@ function handleImport(): void {
 
   const imported = importFromJSON(filePath);
   console.log(`Imported ${imported} entries from: ${filePath}`);
+}
+
+function handleMigrate(): void {
+  console.log("Starting migration...");
+  const result = migrate();
+  console.log(`\nMigration complete:`);
+  console.log(`  Migrated: ${result.migrated} files`);
+  console.log(`  Skipped: ${result.skipped} files (already have IDs)`);
 }
 
 try {
@@ -267,6 +283,9 @@ try {
       break;
     case "stats":
       handleStats();
+      break;
+    case "migrate":
+      handleMigrate();
       break;
     default:
       printUsage();

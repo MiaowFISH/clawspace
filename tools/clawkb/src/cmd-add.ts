@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import { serializeFrontmatter } from "./frontmatter.js";
-import { ensureDir, getEntryPath, getTopicDir } from "./fs-helpers.js";
+import { ensureDir, getEntryPathById, getTopicDir, getKBRoot } from "./fs-helpers.js";
+import { generateUniqueId } from "./id-generator.js";
 import type { Frontmatter } from "./types.js";
 
 export function add(topic: string, title: string, tags: string[] = []): string {
@@ -15,13 +16,12 @@ export function add(topic: string, title: string, tags: string[] = []): string {
   const topicDir = getTopicDir(topic);
   ensureDir(topicDir);
 
-  const entryPath = getEntryPath(topic, title);
-
-  if (fs.existsSync(entryPath)) {
-    throw new Error(`Entry already exists: ${entryPath}`);
-  }
+  const kbRoot = getKBRoot();
+  const id = generateUniqueId(kbRoot);
+  const entryPath = getEntryPathById(topic, id);
 
   const frontmatter: Frontmatter = {
+    id,
     title,
     tags: tags.length > 0 ? tags : [topic],
     created: new Date().toISOString(),

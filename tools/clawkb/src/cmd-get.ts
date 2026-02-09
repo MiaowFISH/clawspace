@@ -1,21 +1,14 @@
 import fs from "node:fs";
 import { parseFrontmatter } from "./frontmatter.js";
-import { getEntryPath } from "./fs-helpers.js";
+import { getEntryByIdOrTitle } from "./fs-helpers.js";
 import type { KBEntry } from "./types.js";
 
-export function get(topic: string, title: string): KBEntry {
-  if (!topic || topic.trim() === "") {
-    throw new Error("Topic cannot be empty");
-  }
-  if (!title || title.trim() === "") {
-    throw new Error("Title cannot be empty");
+export function get(topicOrId: string, title?: string): KBEntry {
+  if (!topicOrId || topicOrId.trim() === "") {
+    throw new Error("Topic or ID cannot be empty");
   }
 
-  const filePath = getEntryPath(topic, title);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error(`Entry not found: ${topic}/${title}\nFile path: ${filePath}`);
-  }
+  const { filePath, topic } = getEntryByIdOrTitle(topicOrId, title);
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { frontmatter, content } = parseFrontmatter(raw);

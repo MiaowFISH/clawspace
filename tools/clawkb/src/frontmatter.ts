@@ -5,6 +5,7 @@ const FRONTMATTER_DELIMITER = "---";
 export function serializeFrontmatter(fm: Frontmatter): string {
   const lines: string[] = [
     FRONTMATTER_DELIMITER,
+    `id: "${fm.id}"`,
     `title: "${fm.title}"`,
     `tags: [${fm.tags.map((t) => `"${t}"`).join(", ")}]`,
     `created: "${fm.created}"`,
@@ -40,6 +41,7 @@ export function parseFrontmatter(raw: string): {
     fmMap.set(key, value);
   }
 
+  const id = stripQuotes(fmMap.get("id") ?? "");
   const title = stripQuotes(fmMap.get("title") ?? "");
   const tags = parseTags(fmMap.get("tags") ?? "[]");
   const created = stripQuotes(fmMap.get("created") ?? "");
@@ -47,7 +49,7 @@ export function parseFrontmatter(raw: string): {
   const content = lines.slice(closingIdx + 1).join("\n");
 
   return {
-    frontmatter: { title, tags, created },
+    frontmatter: { id, title, tags, created },
     content,
   };
 }

@@ -5,14 +5,6 @@
       "version": "1.0.0",
       "installedAt": 1770552328561
     },
-    "coding-opencode": {
-      "version": "1.0.0",
-      "installedAt": 1770552523977
-    },
-    "deepwiki": {
-      "version": "1.0.0",
-      "installedAt": 1770553528304
-    },
     "aura": {
       "version": "0.1.0-beta.1",
       "installedAt": 1770553861213
@@ -28,10 +20,6 @@
     "openclaw-mem": {
       "version": "2.1.0",
       "installedAt": 1770565486777
-    },
-    "brainrepo": {
-      "version": "1.0.0",
-      "installedAt": 1770569812315
     }
   }
 }

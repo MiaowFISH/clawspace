@@ -1,4 +1,5 @@
 export interface Frontmatter {
+  id: string;
   title: string;
   tags: string[];
   created: string;

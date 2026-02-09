@@ -5,10 +5,13 @@ A simple, zero-dependency Markdown knowledge base CLI tool built with Node.js.
 ## Features
 
 - 📝 Markdown-based notes with frontmatter metadata
+- 🆔 Unique ID system for each note (short 8-character IDs)
 - 🏷️ Tag-based organization
 - 🔍 Full-text search across all notes
 - 📁 Topic-based categorization
 - 💾 Import/Export to JSON
+- ⚙️ Configurable via `.clawkbrc` file
+- 🔄 Migration tool for existing notes
 - 🚀 Zero dependencies (uses only Node.js standard library)
 
 ## Installation
@@ -37,6 +40,20 @@ kb list
 kb add myproject "Project Setup"
 ```
 
+## Configuration
+
+Create a `.clawkbrc` file in your project root to customize settings:
+
+```json
+{
+  "dataDir": "./kb",
+  "maxIdLength": 8
+}
+```
+
+- `dataDir`: Directory where notes are stored (default: `./kb`)
+- `maxIdLength`: Length of generated IDs (default: `8`)
+
 ## Quick Start
 
 1. Initialize the knowledge base:
@@ -49,12 +66,17 @@ kb init
 kb add general "My First Note" --tags learning,demo
 ```
 
-3. List all notes:
+3. List all notes (shows IDs):
 ```bash
 kb list
 ```
 
-4. Search for content:
+4. Get a note by ID:
+```bash
+kb get abc123xy
+```
+
+5. Search for content:
 ```bash
 kb search "first note"
 ```
@@ -92,32 +114,47 @@ kb search "architecture"
 kb search "bot design"
 ```
 
-### `kb get <topic> <title>`
-View the full content of a specific note.
+### `kb get <id>` or `kb get <topic> <title>`
+View the full content of a specific note by ID or by topic and title.
 
 ```bash
-kb get yesimbot "Bot Architecture"
+kb get abc123xy                    # Get by ID
+kb get yesimbot "Bot Architecture" # Get by topic and title
 ```
 
-### `kb edit <topic> <title>`
+### `kb edit <id>` or `kb edit <topic> <title>`
 Edit an existing note using your default editor ($EDITOR or nano).
 
 ```bash
-kb edit yesimbot "Bot Architecture"
+kb edit abc123xy                   # Edit by ID
+kb edit yesimbot "Bot Architecture" # Edit by topic and title
 ```
 
-### `kb delete <topic> <title>`
-Delete a note.
+### `kb delete <id>` or `kb delete <topic> <title>`
+Delete a note by ID or by topic and title.
 
 ```bash
-kb delete yesimbot "Old Note"
+kb delete abc123xy                 # Delete by ID
+kb delete yesimbot "Old Note"      # Delete by topic and title
 ```
 
-### `kb tag <topic> <title> <tag>`
+### `kb tag <id> <tag>` or `kb tag <topic> <title> <tag>`
 Add a tag to an existing note.
 
 ```bash
-kb tag yesimbot "Bot Architecture" important
+kb tag abc123xy important                    # Tag by ID
+kb tag yesimbot "Bot Architecture" important # Tag by topic and title
+```
+
+### `kb migrate`
+Migrate existing notes to the new ID-based format. This command:
+- Scans all existing notes
+- Generates unique IDs for notes without IDs
+- Renames files to use ID format
+- Updates frontmatter with ID field
+
+```bash
+kb migrate
 ```
 
 ### `kb mv <topic> <title> <new-topic>`
@@ -155,17 +192,18 @@ kb stats
 kb/
 └── topics/
     ├── general/
-    │   └── my-first-note.md
+    │   └── abc123xy.md
     ├── yesimbot/
-    │   └── bot-architecture.md
+    │   └── def456gh.md
     └── ideas/
-        └── feature-request.md
+        └── ghi789jk.md
 ```
 
-Each note is a Markdown file with frontmatter:
+Each note is a Markdown file named with its unique ID and contains frontmatter:
 
 ```markdown
 ---
+id: abc123xy
 title: Bot Architecture
 tags:
   - ai

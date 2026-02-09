@@ -1,20 +1,12 @@
 import fs from "node:fs";
-import { getEntryPath } from "./fs-helpers.js";
+import { getEntryByIdOrTitle } from "./fs-helpers.js";
 
-export function deleteEntry(topic: string, title: string): string {
-  // Validate inputs
-  if (!topic || topic.trim() === "") {
-    throw new Error("Topic cannot be empty");
-  }
-  if (!title || title.trim() === "") {
-    throw new Error("Title cannot be empty");
+export function deleteEntry(topicOrId: string, title?: string): string {
+  if (!topicOrId || topicOrId.trim() === "") {
+    throw new Error("Topic or ID cannot be empty");
   }
 
-  const filePath = getEntryPath(topic, title);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error(`Entry not found: ${topic}/${title}\nFile path: ${filePath}`);
-  }
+  const { filePath } = getEntryByIdOrTitle(topicOrId, title);
 
   fs.unlinkSync(filePath);
   return filePath;

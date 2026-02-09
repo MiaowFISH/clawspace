@@ -1,32 +1,29 @@
 import fs from "node:fs";
 import { parseFrontmatter, serializeFrontmatter } from "./frontmatter.js";
-import { getEntryPath } from "./fs-helpers.js";
+import { getEntryByIdOrTitle } from "./fs-helpers.js";
 
-export function addTag(topic: string, title: string, tag: string): void {
-  if (!topic || topic.trim() === "") {
-    throw new Error("Topic cannot be empty");
+export function addTag(topicOrId: string, titleOrTag: string, tag?: string): void {
+  if (!topicOrId || topicOrId.trim() === "") {
+    throw new Error("Topic or ID cannot be empty");
   }
-  if (!title || title.trim() === "") {
-    throw new Error("Title cannot be empty");
-  }
-  if (!tag || tag.trim() === "") {
+
+  const actualTag = tag || titleOrTag;
+  const actualTitle = tag ? titleOrTag : undefined;
+
+  if (!actualTag || actualTag.trim() === "") {
     throw new Error("Tag cannot be empty");
   }
 
-  const filePath = getEntryPath(topic, title);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error(`Entry not found: ${topic}/${title}`);
-  }
+  const { filePath } = getEntryByIdOrTitle(topicOrId, actualTitle);
 
   const raw = fs.readFileSync(filePath, "utf-8");
   const { frontmatter, content } = parseFrontmatter(raw);
 
-  if (frontmatter.tags.includes(tag)) {
-    throw new Error(`Tag "${tag}" already exists`);
+  if (frontmatter.tags.includes(actualTag)) {
+    throw new Error(`Tag "${actualTag}" already exists`);
   }
 
-  frontmatter.tags.push(tag);
+  frontmatter.tags.push(actualTag);
 
   const header = serializeFrontmatter(frontmatter);
   fs.writeFileSync(filePath, header + content, "utf-8");

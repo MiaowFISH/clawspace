@@ -1,21 +1,12 @@
-import fs from "node:fs";
 import { spawnSync } from "node:child_process";
-import { getEntryPath } from "./fs-helpers.js";
+import { getEntryByIdOrTitle } from "./fs-helpers.js";
 
-export function edit(topic: string, title: string): void {
-  // Validate inputs
-  if (!topic || topic.trim() === "") {
-    throw new Error("Topic cannot be empty");
-  }
-  if (!title || title.trim() === "") {
-    throw new Error("Title cannot be empty");
+export function edit(topicOrId: string, title?: string): void {
+  if (!topicOrId || topicOrId.trim() === "") {
+    throw new Error("Topic or ID cannot be empty");
   }
 
-  const filePath = getEntryPath(topic, title);
-
-  if (!fs.existsSync(filePath)) {
-    throw new Error(`Entry not found: ${topic}/${title}\nFile path: ${filePath}`);
-  }
+  const { filePath } = getEntryByIdOrTitle(topicOrId, title);
 
   const editor = process.env.EDITOR || process.env.VISUAL || "nano";
 

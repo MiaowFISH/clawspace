@@ -41,19 +41,26 @@ Add whatever helps you do your job. This is your cheat sheet.
 
 ## 知识管理工具
 
-### notebook
-- **格式**：YAML
-- **位置**：workspace/notebook/
-- **用途**：结构化数据存储
-- **功能**：list, add, get, edit, delete, find, stats
-- **已修复**：tags类型不一致问题（统一为数组）
-- **示例**：YesImBot项目文档、技术讨论记录
-
-### clawkb
+### clawkb（主要工具）
 - **格式**：Markdown
 - **位置**：tools/clawkb/
 - **用途**：技术文档和知识库
 - **功能**：init, add, list, search, get, edit, delete, tag, mv, export, import, stats
+- **配置系统**：
+  - `.clawkbrc`文件（JSON格式）
+  - 支持参数：`dataDir`（数据目录）、`maxIdLength`（ID长度）
+  - 搜索路径：当前目录 → workspace → ~（优先级从高到低）
+  - dataDir相对路径相对于配置文件所在目录解析
+  - 环境变量覆盖：`CLAWKB_DATA_DIR`、`CLAWKB_MAX_ID_LENGTH`
+- **ID系统**：
+  - 8位字符唯一ID（a-z0-9）
+  - 文件名格式：`<topic>/<id>.md`
+  - 支持双模式查询：`kb get <id>` 和传统方式
+  - `kb migrate`命令自动转换旧格式
+- **自动补全**：
+  - 支持bash/zsh
+  - 可补全topic、id、标题
+  - 安装：`kb completion install bash` / `kb completion install zsh`
 - **特性**：
   - ✅ 完整中文支持（标题、标签、内容）
   - ✅ 智能文件名生成（支持中文、英文、中英混合）
@@ -65,39 +72,63 @@ Add whatever helps you do your job. This is your cheat sheet.
   kb init                    # 初始化知识库
   kb add "模型服务架构设计"  # 添加笔记（中文标题）
   kb list                    # 列出所有笔记
-  kb tag <id> architecture  # 添加标签
+  kb get bnwis6t2            # 通过ID查询
+  kb tag bnwis6t2 arch      # 添加标签
+  kb migrate                 # 迁移旧格式
+  kb completion install bash # 安装自动补全
   ```
 
-## 开发协作流程
+## 工具开发最佳实践
 
-### 工具开发
+### 协作模式
 - **架构设计**：使用OpenCode实现新工具/功能
+  - 适合从零开始构建、架构设计
+  - 负责整体方案和技术选型
 - **Bug修复**：使用Claude Code快速修复问题
-- **测试**：编写测试用例验证功能
-- **文档**：更新README.md和使用说明
+  - 适合调试、快速迭代、定位问题
+  - 可以准确修复具体bug
+- **分工明确**：OpenCode负责骨架，Claude Code负责细节
 
-### 调试技巧
-- 查看日志：`cat /tmp/clawkb-debug.log`
-- 调试TypeScript CLI：注意编译和运行时的命令区别
-  - 编译：`npx tsc`
-  - 运行：`node dist/cli.js <command>`
+### 开发流程
+1. **需求分析**：明确功能、边界、技术选型
+2. **架构设计**：OpenCode设计整体结构
+3. **编码实现**：OpenCode实现核心功能
+4. **测试验证**：编写测试用例，手动验证关键功能
+5. **Bug修复**：Claude Code修复发现的问题
+6. **文档完善**：更新README.md、使用说明
+
+### TypeScript CLI开发
+- **编译**：`npx tsc`（在工具目录下）
+- **运行**：`node dist/cli.js <command>`（注意：不需要工具前缀）
+- **调试技巧**：
+  - 查看日志：`cat /tmp/<tool>-debug.log`
+  - 添加console.log调试参数解析
+  - 检查编译后的dist/目录
 
 ### Git最佳实践
-- 配置.gitignore：忽略dist/、kb/等生成目录
-- 清理历史：`git rm -r --cached dist/`（误提交时）
-- 提交规范：使用清晰的前缀（feat:、fix:、chore:、docs:）
+- **.gitignore配置**：
+  - 忽略dist/（build artifacts）
+  - 忽略数据目录（kb/、knowledge/等）
+  - 忽略配置文件（.clawkbrc等本地配置）
+- **清理历史**：
+  - 误提交时：`git rm -r --cached dist/`
+  - 清理后添加到.gitignore
+- **提交规范**：
+  - feat: 新功能
+  - fix: Bug修复
+  - chore: 杂项（配置、构建）
+  - docs: 文档
 
 ### 中文字符处理
-- 正则表达式：`/[^\w\u4e00-\u9fa5-]+/g`（保留中文）
-- 文件名生成：支持中文、英文、中英混合
-- Frontmatter：确保中文标签正确编码
+- **正则表达式**：`/[^\w\u4e00-\u9fa5-]+/g`（保留中文）
+- **文件名生成**：支持中文、英文、中英混合
+- **Frontmatter**：确保中文标签正确编码，注意换行
 
-## 工具选择原则
-
-当多个工具都能完成类似功能时：
-1. 优先使用已有工具（避免冗余）
-2. 评估是否符合当前工作流
-3. 考虑维护成本和学习成本
-4. 除非有明显优势，否则不引入新工具
-
-示例：notebook（已修复）vs brainrepo（新安装）→ 选择notebook
+### 工具评估与选择
+- **避免冗余**：评估后选最优方案，不重复安装相似工具
+- **工具选择原则**：
+  1. 优先使用已有工具
+  2. 评估是否符合当前工作流
+  3. 考虑维护成本和学习成本
+  4. 除非有明显优势，否则不引入新工具
+- **教训**：未评估就安装brainrepo，后删除（浪费时间）

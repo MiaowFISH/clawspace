@@ -195,6 +195,19 @@
 
 ---
 
+## POLICY-2026-02-10-01 - 记忆文件保留规则
+**Type**: policy
+**Area**: memory
+
+**Rule**: 整理记忆时不得删除memory/YYYY-MM-DD.md文件
+
+**Details**:
+- 所有daily memory文件必须保留
+- 只更新MEMORY.md（长期记忆）
+- 如果误删，用户会从git恢复
+
+---
+
 ## DEC-2026-02-10-02 - 启动Medic词库引擎重构
 **Type**: decision
 **Area**: projects

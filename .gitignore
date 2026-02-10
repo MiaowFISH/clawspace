@@ -12,6 +12,9 @@ yarn.lock
 .DS_Store
 Thumbs.db
 
+# Yarn
+.yarn/install-state.gz
+
 # IDE
 .vscode/
 .idea/

@@ -77,6 +77,9 @@ Add whatever helps you do your job. This is your cheat sheet.
   kb migrate                 # 迁移旧格式
   kb completion install bash # 安装自动补全
   ```
+- **CLI调用方式**：
+  - 未全局安装时：`node dist/cli.js <command>`
+  - 示例：`node /opt/.openclaw/workspace/tools/clawkb/dist/cli.js stats`
 
 ## 工具开发最佳实践
 
@@ -132,3 +135,12 @@ Add whatever helps you do your job. This is your cheat sheet.
   3. 考虑维护成本和学习成本
   4. 除非有明显优势，否则不引入新工具
 - **教训**：未评估就安装brainrepo，后删除（浪费时间）
+
+### 包管理器选择
+- **默认**：bun@1.3.9（性能优于yarn/npm）
+- **使用场景**：
+  - EmoHub项目：前端React + 后端Fastify
+  - 新项目优先考虑bun
+  - 性能敏感型项目优先使用bun
+- **优势**：安装速度快、运行性能好、生态系统完整
+- **注意**：兼容性测试后再迁移旧项目

@@ -327,6 +327,90 @@
 
 ---
 
+## FACT-2026-02-12-01 - NapCat插件和Web UI上线
+**Type**: fact
+**Area**: projects
+
+**进展时间**：2026-02-11 18:12-20:47
+**提交数量**：7个commit
+
+**主要成果**：
+1. **NapCat插件**：完整适配器（GlobalAdapter, NapCatAdapter, API服务）
+2. **Web UI**：React + TypeScript + Vite应用
+   - ConfigPanel：配置管理、群组列表、管理员列表
+   - LogPanel：实时日志轮询（1.5秒）、日志过滤
+   - 深色模式支持、响应式设计（桌面端双栏、移动端tab）
+   - Toast通知系统
+3. **技术栈**：React 18 + Tailwind CSS + PostCSS
+4. **代码量**：1205行前端代码，约1900行新增代码
+
+**Note**: NapCat插件模板使用Git submodules管理
+
+---
+
+## PREF-2026-02-12-01 - 包管理器选择偏好
+**Type**: preference
+**Area**: development
+
+**Preference**: 优先使用bun@1.3.9作为包管理器
+
+**Reason**:
+- 安装速度快
+- 运行性能优于yarn/npm
+- 生态系统完整
+- 兼容性良好
+
+**使用场景**:
+- 新项目优先考虑bun
+- 性能敏感型项目必须使用bun
+- 兼容性测试后再迁移旧项目
+
+**Note**: EmoHub项目已确认使用bun（前端React + 后端Fastify）
+
+---
+
+## FACT-2026-02-12-02 - GitHub CLI未登录
+**Type**: fact
+**Area**: tools
+
+**问题**：GitHub CLI（gh）未登录，影响`gh issue`、`gh pr`、`gh api`等命令使用
+
+**状态**：持续问题（2月11日首次发现，尚未解决）
+
+**解决方案**：运行`gh auth login`登录GitHub账号
+
+---
+
+## DEC-2026-02-12-01 - EmoHub项目启动
+**Type**: decision
+**Area**: projects
+
+**Decision**: 启动EmoHub跨平台表情包管理系统
+
+**Background**:
+- 4000+张表情包，管理困难
+- QQ收藏已达上限，不想开会员
+- 需要智能标签分类、向量搜索、多平台同步
+
+**Architecture**:
+- **客户端预处理**：压缩原图、生成缩略图、生成CLIP输入（224x224）
+- **服务端向量化**：CLIP模型向量化（~50ms/张）、OCR、向量搜索
+- **性能优化**：网络传输快20-50倍（2-5MB → 50-100KB），搜索总响应<200ms
+
+**Tech Stack**:
+- 前端：React 18 + TypeScript + Vite + Tailwind CSS
+- 移动端：React Native + Expo + NativeWind
+- 后端：Node.js 22 + Fastify 4 + Prisma + SQLite
+- 向量搜索：sqlite-vss（512维向量）
+- AI/向量：CLIP（服务端向量化）、Tesseract.js（OCR）
+- 包管理器：bun@1.3.9
+
+**Location**: `/opt/.openclaw/workspace/external/emohub/`
+
+**Documentation**: 技术需求文档SEPC.md已更新，远程仓库待创建
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆

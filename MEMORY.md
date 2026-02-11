@@ -288,6 +288,45 @@
 
 ---
 
+## FACT-2026-02-11-01 - Medic词库引擎重大进展
+**Type**: fact
+**Area**: projects
+
+**进展时间**：2026-02-10 22:31-02:30（约4小时）
+**提交数量**：10个commit
+
+**主要成果**：
+1. **架构简化**：移除Toolkit抽象层（删除443行代码）
+2. **功能增强**：
+   - 配置管理器：群组开关机、管理员管理
+   - 管理员操作：Koishi插件管理员功能
+   - ToolKit函数：实现293行工具函数
+3. **测试覆盖**：
+   - 6个测试文件：dictionary, lexer, parser, engine, toolkit, hdic
+   - 61个测试用例：全部通过
+   - 新增hdic.test.ts：测试实际词库文件
+4. **文档完善**：
+   - CLAUDE.md：详细的架构说明和开发指南
+   - README.md：项目结构和快速开始
+   - 开发命令：yarn build/test/lint/fmt
+
+**项目状态**：
+- 28个TypeScript源文件
+- 两个package：@medic/engine + koishi-plugin-medic
+- Monorepo架构，严格类型检查（禁止any，禁止floating promises）
+
+**核心功能**：
+- 词库加载：支持hdic.txt格式
+- 消息处理：Dictionary匹配 → Lexer → Parser → Response
+- 变量系统：@变量名（单字符+多字符）
+- 模块系统：MOD(模块名)调用，共享变量
+- 配置管理：群组开关机、管理员管理
+- 适配器：Koishi插件实现（GlobalAdapter, KoishiAdapter）
+
+**Note**: Medic词库引擎已经非常成熟，测试覆盖完善，文档齐全。
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆

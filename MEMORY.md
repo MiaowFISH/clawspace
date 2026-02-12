@@ -653,6 +653,32 @@ cp -r everything-claude-code/rules/typescript/* ~/.claude/rules/
 
 ---
 
+## FACT-2026-02-12-06 - EmoHub Phase 6（深色模式）完成
+**Type**: fact
+**Area**: projects
+
+**完成时间**：2026-02-12 晚上
+**提交数量**：10个新提交（共29个）
+
+**Phase 6（深色模式）完成度**：
+- docs(06): research dark mode implementation✅
+- docs(06-dark-mode): create phase plan✅
+- docs(06-01): complete dark mode foundation plan✅
+- docs(06-02): complete component theme application plan✅
+- docs(phase-06): complete phase execution✅
+
+**技术实现**：
+- 深色模式：light/dark/system三种主题
+- CSS变量：所有组件硬编码颜色改为CSS变量
+- FOUC防止：内联脚本防止白屏闪烁
+- 语义化颜色：扩展CSS变量调色板（状态颜色等）
+
+**Location**: `/opt/.openclaw/workspace/external/emohub/`
+
+**Note**: 使用get-shit-done工具推进，Phase 6完成。
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆
@@ -666,6 +692,7 @@ cp -r everything-claude-code/rules/typescript/* ~/.claude/rules/
 - 2026-02-11：学习get-shit-done和everything-claude-code工具
 - 2026-02-12：EmoHub v1.0 MVP完成，进入v1.1 UX Polish
 - 2026-02-12：EmoHub Phase 5（设置界面）完成
+- 2026-02-12：EmoHub Phase 6（深色模式）完成
 
 ---
 _持续更新中... (oﾟvﾟ)ノ_

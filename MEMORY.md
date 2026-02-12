@@ -411,6 +411,105 @@
 
 ---
 
+## DEC-2026-02-12-02 - EmoHub架构决策
+**Type**: decision
+**Area**: projects
+
+**Decision**: 客户端预处理 + 服务端向量化
+
+**Reason**:
+- 客户端预处理减少服务器负担
+- 网络传输快20-50倍（2-5MB → 50-100KB）
+- 服务端只负责向量化（~50ms/张）、OCR、向量搜索
+
+**Preprocessing Config**:
+- 原图：1920px宽，JPEG 85%（~50-100KB）
+- 缩略图：300x300，cover模式，JPEG 80%（~20KB）
+- CLIP输入：224x224，cover模式，PNG（~20KB）
+
+**Performance**:
+- 客户端预处理：~300ms
+- 服务端向量化：~50ms
+- 搜索总响应：<200ms
+- 单张存储：~92-142KB
+
+**Note**: 所有客户端必须使用相同的预处理参数（cover模式居中裁剪）
+
+---
+
+## TOOL-2026-02-12-01 - get-shit-done项目规划工具
+**Type**: tool
+**Area**: development
+
+**Tool**: get-shit-done (GSD) - 轻量级元提示、上下文工程和规范驱动开发系统
+
+**Location**: https://github.com/gsd-build/get-shit-done
+
+**Core Workflows**:
+1. `/gsd:new-project` - 完整初始化（问题→研究→需求→路线图）
+2. `/gsd:discuss-phase N` - 捕获实现决策（视觉/API/内容/组织）
+3. `/gsd:plan-phase N` - 研究→计划→验证（2-3个原子任务）
+4. `/gsd:execute-phase N` - 并行执行、刷新上下文、原子提交
+5. `/gsd:verify-work N` - 手动用户接受测试
+6. `/gsd:complete-milestone` - 归档里程碑、标记发布
+7. `/gsd:quick` - 临时任务（bug修复、小功能）
+
+**Key Features**:
+- 上下文工程：自动管理文件（PROJECT.md、REQUIREMENTS.md、ROADMAP.md、STATE.md）
+- XML提示格式：原子任务+验证步骤
+- 多代理协调：研究、规划、执行、验证代理
+- 原子Git提交：每任务一个commit
+- 快速模式：跳过研究、计划检查、验证器
+
+**Best Practices**:
+- 使用`/clear`而不是开新session（保留GSD状态）
+- Monorepo阶段划分对应GSD Phases
+- 验证阶段必须手动测试功能
+- 进度跟踪：`/gsd:progress`
+
+**Note**: 解决上下文腐烂（context rot），适合规范驱动开发项目
+
+---
+
+## TOOL-2026-02-12-02 - everything-claude-code配置集合
+**Type**: tool
+**Area**: development
+
+**Tool**: everything-claude-code - Claude Code完整配置集合
+
+**Location**: https://github.com/affaan-m/everything-claude-code
+
+**Components**:
+1. **15+ Agents**: planner, architect, code-reviewer, security-reviewer等
+2. **28+ Skills**: coding-standards, backend-patterns, frontend-patterns, tdd-workflow等
+3. **30+ Commands**: /plan, /tdd, /code-review, /security, /build-fix等
+4. **Rules**: common/和语言特定目录
+5. **Hooks**: 20+种事件类型
+
+**Features**:
+- 跨平台：Windows, macOS, Linux
+- 支持Claude Code CLI v2.1.0+
+- 自动补全（bash/zsh）
+- 生态系统：Skill Creator, AgentShield, Continuous Learning v2
+
+**Installation**:
+```bash
+/plugin marketplace add affaan-m/everything-claude-code
+/plugin install everything-claude-code@everything-claude-code
+cp -r everything-claude-code/rules/common/* ~/.claude/rules/
+cp -r everything-claude-code/rules/typescript/* ~/.claude/rules/
+```
+
+**Use Cases**:
+- 单个任务：agents处理特定需求
+- 代码审查：code-reviewer + security-reviewer
+- TDD：tdd-guide workflow
+- 快速执行：/plan, /tdd, /code-review等斜杠命令
+
+**Note**: 与get-shit-done互补，GSD负责工作流，everything-claude-code提供agents/skills/commands
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆
@@ -419,6 +518,9 @@
 - 2026-02-10：clawkb功能增强完成
 - 2026-02-10：迁移到clawkb知识库
 - 2026-02-10：启动Medic词库引擎重构
+- 2026-02-11：NapCat插件和Web UI上线
+- 2026-02-11：EmoHub项目启动
+- 2026-02-11：学习get-shit-done和everything-claude-code工具
 
 ---
 _持续更新中... (oﾟvﾟ)ノ_

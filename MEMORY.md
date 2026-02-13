@@ -679,6 +679,46 @@ cp -r everything-claude-code/rules/typescript/* ~/.claude/rules/
 
 ---
 
+## DEC-2026-02-13-01 - MuseSync项目启动（Flutter重写）
+**Type**: decision
+**Area**: projects
+
+**Decision**: 用Flutter重写music-together（音乐同步播放器）
+
+**Reason**:
+- 原RN实现（music-together）音频库bug多（expo-audio不稳定、后台播放问题、蓝牙控制断连）
+- Flutter原生性能：60fps稳定
+- 音频库成熟：just_audio比expo-audio更稳定
+- 实时同步：Dart Isolate更适合处理音频同步
+- 跨平台一致性：iOS/Android完全一致
+
+**Technical Stack**:
+- 前端：Flutter 3.27 + Riverpod + just_audio + audio_session
+- 后端：Node.js 22 + Express + Socket.io（保持原backend）
+- 包管理器：bun@1.3.9
+
+**Project Details**:
+- 原项目：music-together（RN实现，001-realtime-sync-player分支）
+- 新项目：musync-flutter（Flutter重写）
+- 预计时间：2-3周完成核心功能（P0）
+- Location: `/opt/.openclaw/workspace/external/musync-flutter/`
+
+**Features**:
+- 房间管理（P0）：创建、加入、离开、验证房间
+- 播放控制（P0）：播放、暂停、拖动进度、切换歌曲
+- 实时同步（P0）：状态同步、进度同步、版本控制
+- 点歌系统（P0）：添加歌曲、移除歌曲、播放列表
+- 时间同步（P0）：NTP算法、时钟偏差校准
+- 音频播放（P0）：音频流播放、后台播放、蓝牙控制
+
+**Documentation**:
+- SEPC.md：完整技术需求文档（22KB、1307行）
+- 包含系统架构、API设计、数据模型、开发阶段规划（13个阶段）
+
+**Note**: 使用get-shit-done工具推进，13个开发阶段，预计2-3周完成核心功能。
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆
@@ -693,6 +733,7 @@ cp -r everything-claude-code/rules/typescript/* ~/.claude/rules/
 - 2026-02-12：EmoHub v1.0 MVP完成，进入v1.1 UX Polish
 - 2026-02-12：EmoHub Phase 5（设置界面）完成
 - 2026-02-12：EmoHub Phase 6（深色模式）完成
+- 2026-02-13：MuseSync项目启动（Flutter重写）
 
 ---
 _持续更新中... (oﾟvﾟ)ノ_

@@ -36,6 +36,39 @@
 
 ---
 
+## POLICY-2026-02-10-01 - 记忆文件保留规则
+**Type**: policy
+**Area**: memory
+
+**Rule**: 整理记忆时不得删除memory/YYYY-MM-DD.md文件
+
+**Details**:
+- 所有daily memory文件必须保留
+- 只更新MEMORY.md（长期记忆）
+- 如果误删，用户会从git恢复
+
+---
+
+## POLICY-2026-02-10-02 - QQ平台消息过滤规则
+**Type**: policy
+**Area**: communication
+
+**Rule**: QQ频道/群聊中严禁发送任何被识别为URL的内容
+
+**被过滤格式**（绝对避免）:
+- 文件后缀：.md, .js, .json 等
+- 完整域名或URL
+- 类似冒号加斜杠的组合
+
+**解决方案**:
+- 文件后缀用空格分隔：MEMORY . md、SKILL . md
+- 用中文描述代替：记忆文件、配置文件
+- 避免提及具体路径和域名
+
+**Note**: QQ平台的过滤很严格，只要像域名或文件路径的格式都会被拦截
+
+---
+
 ## DEC-2026-02-08-01 - 每日自我进化系统
 **Type**: decision
 **Area**: automation
@@ -62,22 +95,6 @@
 - autonomy: 8/10 - 主动决策
 
 **Note**: 敏感/模糊操作需经过喵呜批准
-
----
-
-## DEC-2026-02-08-03 - Notebook知识库
-**Type**: decision
-**Area**: tools
-
-**Decision**: 启用Notebook作为本地知识库
-
-**Reason**:
-- YAML格式，无云锁定
-- 支持自定义对象类型
-- 标签搜索和过滤
-- 用于记录：YesImBot项目文档、技术讨论、Moltbook研讨等
-
-**Note**: YesImBot详细项目信息已迁移至notebook/doc类型
 
 ---
 
@@ -126,137 +143,7 @@
 - 零依赖，只使用Node.js标准库
 - 12个完整命令，覆盖CRUD和导出导入
 
-**Note**: notebook保留用于结构化数据存储（如YesImBot项目文档）
-
----
-
-## FACT-2026-02-08-01 - 系统健康与安全
-**Type**: fact
-**Area**: security
-
-**安全警告**:
-- **credentials目录权限**：建议设置为700（`chmod 700 /root/.openclaw/credentials`）
-- 避免在公开场合暴露API Key和敏感信息
-- 安装技能前需审计（类似npm audit）
-
----
-
-## FACT-2026-02-10-01 - clawkb功能增强
-**Type**: fact
-**Area**: tools
-
-**新功能**：
-- **配置系统**：`.clawkbrc`文件（JSON格式），支持`dataDir`和`maxIdLength`
-- **ID系统**：每篇文章唯一8位ID（a-z0-9），文件名格式为`<topic>/<id>.md`
-- **迁移工具**：`kb migrate`命令自动转换旧格式到新格式
-- **自动补全**：支持bash/zsh的ID/topic补全
-- **双模式查询**：支持`kb get <id>`和传统方式`kb get <topic> <title>`
-
-**Git提交**：2da7067
-
----
-
-## FACT-2026-02-10-02 - 配置文件搜索路径修复
-**Type**: fact
-**Area**: tools
-
-**修复内容**：.clawkbrc文件多路径搜索
-1. 当前目录 (process.cwd())
-2. Workspace目录 (/opt/.openclaw/workspace)
-3. 用户主目录 (~)
-
-**改进**：
-- dataDir相对路径相对于配置文件所在目录解析
-- .clawkbrc加入.gitignore（本地配置）
-
-**Git提交**：10d7f10
-
----
-
-## DEC-2026-02-10-01 - 迁移到clawkb知识库
-**Type**: decision
-**Area**: tools
-
-**Decision**: 完全迁移到clawkb知识库系统
-
-**Details**:
-- 删除notebook/和books/目录
-- 知识库数据位置：knowledge/topics/
-- 配置文件：.clawkbrc（dataDir: "./knowledge"）
-- 数据管理：全部通过clawkb CLI操作
-
-**Benefits**:
-- 统一的工具链管理
-- Markdown格式，便于直接编辑
-- 完整的中文支持
-- Git友好的版本控制
-
-**Git提交**：dd0079f
-
----
-
-## POLICY-2026-02-10-01 - 记忆文件保留规则
-**Type**: policy
-**Area**: memory
-
-**Rule**: 整理记忆时不得删除memory/YYYY-MM-DD.md文件
-
-**Details**:
-- 所有daily memory文件必须保留
-- 只更新MEMORY.md（长期记忆）
-- 如果误删，用户会从git恢复
-
----
-
-## POLICY-2026-02-10-02 - QQ平台消息过滤规则
-**Type**: policy
-**Area**: communication
-
-**Rule**: QQ频道/群聊中严禁发送任何被识别为URL的内容
-
-**被过滤格式**（绝对避免）:
-- 文件后缀：.md, .js, .json 等
-- 完整域名或URL
-- 类似冒号加斜杠的组合
-
-**解决方案**:
-- 文件后缀用空格分隔：MEMORY . md、SKILL . md
-- 用中文描述代替：记忆文件、配置文件
-- 避免提及具体路径和域名
-
-**Note**: QQ平台的过滤很严格，只要像域名或文件路径的格式都会被拦截
-
----
-
-## DEC-2026-02-10-02 - 启动Medic词库引擎重构
-**Type**: decision
-**Area**: projects
-
-**Decision**: 重构Medic词库引擎，完全独立于IM框架
-
-**Reason**:
-- 原版Medic：安卓软件（Java），已因QQ协议变化无法使用
-- 重构版（JS+NapCat）：引擎仍保留Java习惯，大量依赖NapCat功能
-- 需要彻底重构，实现引擎与IM框架解耦
-
-**Architecture**:
-- 执行引擎：@medic/engine（独立包，可单独运行）
-- 适配器：@medic/adapter-napcat（NapCat插件）
-- 消息接口：标准化消息格式，支持多平台扩展
-
-**Key Features**:
-- 1:1复刻原版词库语法（完全兼容hdic.txt）
-- 10个内置函数（Variable, Calc, Call, Goto等）
-- JavaScript词条支持
-- 模块系统
-- 上下文管理（变量、常量）
-
-**Documentation**:
-- 项目文档：knowledge/topics/medic/2pfw91i2.md
-- 原版代码：external/napcat-medic/
-- 词库文档：external/napcat-medic/docs/
-
-**Status**: 需求分析完成，待技术选型确认
+**Note**: 详细的项目文档、工具文档应存储在knowledge/中，MEMORY.md只保留核心决策
 
 ---
 
@@ -288,42 +175,74 @@
 
 ---
 
-## FACT-2026-02-11-01 - Medic词库引擎重大进展
+## DEC-2026-02-12-03 - EmoHub项目启动
+**Type**: decision
+**Area**: projects
+
+**Decision**: 启动EmoHub跨平台表情包管理系统
+
+**Tech Stack**: React 18 + TypeScript + Vite + Tailwind CSS + bun@1.3.9
+
+**Location**: `/opt/.openclaw/workspace/external/emohub/`
+
+**Documentation**: 详细文档见 `kb get emohub EmoHub跨平台表情包管理系统`
+
+**Status**: v1.0 MVP完成，Milestone v1.1 UX Polish进行中
+
+---
+
+## DEC-2026-02-13-01 - MuseSync项目（React Native继续开发）
+**Type**: decision
+**Area**: projects
+
+**Decision**: 继续开发musesync（React Native + Expo版本）
+
+**Reason**:
+- Flutter学习成本高，JS更顺手
+- musesync是music-together的延续，技术栈一致
+- React Native生态成熟，Expo支持良好
+
+**Tech Stack**:
+- 前端：React Native 0.81.5 + Expo 54 + Socket.io
+- 后端：Node.js + Express + Socket.io
+- Monorepo：Yarn Workspaces + Turborepo
+- 包管理器：Yarn 4.12.0
+- Linting：oxlint + oxfmt
+
+**Project Details**:
+- 项目：musesync（React Native + Expo版本）
+- Location: `/opt/.openclaw/workspace/external/musesync/`
+- 当前阶段：Phase 3完成
+
+**Note**: 详细技术文档见项目 `.planning/PROJECT.md`
+
+---
+
+## FACT-2026-02-08-01 - 系统健康与安全
+**Type**: fact
+**Area**: security
+
+**安全警告**:
+- **credentials目录权限**：建议设置为700（`chmod 700 /root/.openclaw/credentials`）
+- 避免在公开场合暴露API Key和敏感信息
+- 安装技能前需审计（类似npm audit）
+
+---
+
+## FACT-2026-02-11-01 - Medic词库引擎成熟
 **Type**: fact
 **Area**: projects
 
-**进展时间**：2026-02-10 22:31-02:30（约4小时）
-**提交数量**：10个commit
+**Status**: Medic词库引擎已经非常成熟
 
-**主要成果**：
-1. **架构简化**：移除Toolkit抽象层（删除443行代码）
-2. **功能增强**：
-   - 配置管理器：群组开关机、管理员管理
-   - 管理员操作：Koishi插件管理员功能
-   - ToolKit函数：实现293行工具函数
-3. **测试覆盖**：
-   - 6个测试文件：dictionary, lexer, parser, engine, toolkit, hdic
-   - 61个测试用例：全部通过
-   - 新增hdic.test.ts：测试实际词库文件
-4. **文档完善**：
-   - CLAUDE.md：详细的架构说明和开发指南
-   - README.md：项目结构和快速开始
-   - 开发命令：yarn build/test/lint/fmt
-
-**项目状态**：
+**Features**:
 - 28个TypeScript源文件
 - 两个package：@medic/engine + koishi-plugin-medic
-- Monorepo架构，严格类型检查（禁止any，禁止floating promises）
+- Monorepo架构，严格类型检查
+- 6个测试文件，61个测试用例全部通过
+- 文档完善（CLAUDE.md、README.md、开发命令）
 
-**核心功能**：
-- 词库加载：支持hdic.txt格式
-- 消息处理：Dictionary匹配 → Lexer → Parser → Response
-- 变量系统：@变量名（单字符+多字符）
-- 模块系统：MOD(模块名)调用，共享变量
-- 配置管理：群组开关机、管理员管理
-- 适配器：Koishi插件实现（GlobalAdapter, KoishiAdapter）
-
-**Note**: Medic词库引擎已经非常成熟，测试覆盖完善，文档齐全。
+**Documentation**: 详细文档见 `kb get medic Medic词库引擎重构`
 
 ---
 
@@ -331,20 +250,14 @@
 **Type**: fact
 **Area**: projects
 
-**进展时间**：2026-02-11 18:12-20:47
-**提交数量**：7个commit
+**Status**: NapCat插件和Web UI已上线
 
-**主要成果**：
-1. **NapCat插件**：完整适配器（GlobalAdapter, NapCatAdapter, API服务）
-2. **Web UI**：React + TypeScript + Vite应用
-   - ConfigPanel：配置管理、群组列表、管理员列表
-   - LogPanel：实时日志轮询（1.5秒）、日志过滤
-   - 深色模式支持、响应式设计（桌面端双栏、移动端tab）
-   - Toast通知系统
-3. **技术栈**：React 18 + Tailwind CSS + PostCSS
-4. **代码量**：1205行前端代码，约1900行新增代码
-
-**Note**: NapCat插件模板使用Git submodules管理
+**Features**:
+- NapCat插件：完整适配器（GlobalAdapter, NapCatAdapter, API服务）
+- Web UI：React + TypeScript + Vite应用
+- ConfigPanel：配置管理、群组列表、管理员列表
+- LogPanel：实时日志轮询（1.5秒）、日志过滤
+- 深色模式支持、响应式设计、Toast通知系统
 
 ---
 
@@ -365,7 +278,7 @@
 - 性能敏感型项目必须使用bun
 - 兼容性测试后再迁移旧项目
 
-**Note**: EmoHub项目已确认使用bun（前端React + 后端Fastify）
+**Note**: EmoHub项目已确认使用bun，MuseSync使用Yarn 4.12.0（Expo兼容性）
 
 ---
 
@@ -378,344 +291,6 @@
 **状态**：持续问题（2月11日首次发现，尚未解决）
 
 **解决方案**：运行`gh auth login`登录GitHub账号
-
----
-
-## DEC-2026-02-12-01 - EmoHub项目启动
-**Type**: decision
-**Area**: projects
-
-**Decision**: 启动EmoHub跨平台表情包管理系统
-
-**Background**:
-- 4000+张表情包，管理困难
-- QQ收藏已达上限，不想开会员
-- 需要智能标签分类、向量搜索、多平台同步
-
-**Architecture**:
-- **客户端预处理**：压缩原图、生成缩略图、生成CLIP输入（224x224）
-- **服务端向量化**：CLIP模型向量化（~50ms/张）、OCR、向量搜索
-- **性能优化**：网络传输快20-50倍（2-5MB → 50-100KB），搜索总响应<200ms
-
-**Tech Stack**:
-- 前端：React 18 + TypeScript + Vite + Tailwind CSS
-- 移动端：React Native + Expo + NativeWind
-- 后端：Node.js 22 + Fastify 4 + Prisma + SQLite
-- 向量搜索：sqlite-vss（512维向量）
-- AI/向量：CLIP（服务端向量化）、Tesseract.js（OCR）
-- 包管理器：bun@1.3.9
-
-**Location**: `/opt/.openclaw/workspace/external/emohub/`
-
-**Documentation**: 技术需求文档SEPC.md已更新，远程仓库待创建
-
----
-
-## DEC-2026-02-12-02 - EmoHub架构决策
-**Type**: decision
-**Area**: projects
-
-**Decision**: 客户端预处理 + 服务端向量化
-
-**Reason**:
-- 客户端预处理减少服务器负担
-- 网络传输快20-50倍（2-5MB → 50-100KB）
-- 服务端只负责向量化（~50ms/张）、OCR、向量搜索
-
-**Preprocessing Config**:
-- 原图：1920px宽，JPEG 85%（~50-100KB）
-- 缩略图：300x300，cover模式，JPEG 80%（~20KB）
-- CLIP输入：224x224，cover模式，PNG（~20KB）
-
-**Performance**:
-- 客户端预处理：~300ms
-- 服务端向量化：~50ms
-- 搜索总响应：<200ms
-- 单张存储：~92-142KB
-
-**Note**: 所有客户端必须使用相同的预处理参数（cover模式居中裁剪）
-
----
-
-## TOOL-2026-02-12-01 - get-shit-done项目规划工具
-**Type**: tool
-**Area**: development
-
-**Tool**: get-shit-done (GSD) - 轻量级元提示、上下文工程和规范驱动开发系统
-
-**Location**: https://github.com/gsd-build/get-shit-done
-
-**Core Workflows**:
-1. `/gsd:new-project` - 完整初始化（问题→研究→需求→路线图）
-2. `/gsd:discuss-phase N` - 捕获实现决策（视觉/API/内容/组织）
-3. `/gsd:plan-phase N` - 研究→计划→验证（2-3个原子任务）
-4. `/gsd:execute-phase N` - 并行执行、刷新上下文、原子提交
-5. `/gsd:verify-work N` - 手动用户接受测试
-6. `/gsd:complete-milestone` - 归档里程碑、标记发布
-7. `/gsd:quick` - 临时任务（bug修复、小功能）
-
-**Key Features**:
-- 上下文工程：自动管理文件（PROJECT.md、REQUIREMENTS.md、ROADMAP.md、STATE.md）
-- XML提示格式：原子任务+验证步骤
-- 多代理协调：研究、规划、执行、验证代理
-- 原子Git提交：每任务一个commit
-- 快速模式：跳过研究、计划检查、验证器
-
-**Best Practices**:
-- 使用`/clear`而不是开新session（保留GSD状态）
-- Monorepo阶段划分对应GSD Phases
-- 验证阶段必须手动测试功能
-- 进度跟踪：`/gsd:progress`
-
-**Note**: 解决上下文腐烂（context rot），适合规范驱动开发项目
-
----
-
-## TOOL-2026-02-12-02 - everything-claude-code配置集合
-**Type**: tool
-**Area**: development
-
-**Tool**: everything-claude-code - Claude Code完整配置集合
-
-**Location**: https://github.com/affaan-m/everything-claude-code
-
-**Components**:
-1. **15+ Agents**: planner, architect, code-reviewer, security-reviewer等
-2. **28+ Skills**: coding-standards, backend-patterns, frontend-patterns, tdd-workflow等
-3. **30+ Commands**: /plan, /tdd, /code-review, /security, /build-fix等
-4. **Rules**: common/和语言特定目录
-5. **Hooks**: 20+种事件类型
-
-**Features**:
-- 跨平台：Windows, macOS, Linux
-- 支持Claude Code CLI v2.1.0+
-- 自动补全（bash/zsh）
-- 生态系统：Skill Creator, AgentShield, Continuous Learning v2
-
-**Installation**:
-```bash
-/plugin marketplace add affaan-m/everything-claude-code
-/plugin install everything-claude-code@everything-claude-code
-cp -r everything-claude-code/rules/common/* ~/.claude/rules/
-cp -r everything-claude-code/rules/typescript/* ~/.claude/rules/
-```
-
-**Use Cases**:
-- 单个任务：agents处理特定需求
-- 代码审查：code-reviewer + security-reviewer
-- TDD：tdd-guide workflow
-- 快速执行：/plan, /tdd, /code-review等斜杠命令
-
-**Note**: 与get-shit-done互补，GSD负责工作流，everything-claude-code提供agents/skills/commands
-
----
-
-## FACT-2026-02-12-01 - EmoHub Phase 3（标签系统）进展
-**Type**: fact
-**Area**: projects
-
-**进展时间**：2026-02-12 上午
-**提交数量**：10个新提交（共13个未推送）
-
-**Phase 3（标签系统）完成度**：
-- 03-01: 标签后端和前端基础（API、Store）✅
-- 03-02: 标签输入和管理UI（TagManager、TagInput）✅
-- 03-03: 标签过滤侧边栏（TagFilter）✅
-- 03-04: 批量标签操作（ImageToolbar集成）✅
-
-**技术实现**：
-- 前端组件：TagManager、TagInput（自动完成）、TagFilter侧边栏
-- 状态管理：tagStore（Zustand）、标签筛选状态
-- API：标签CRUD、批量标签操作
-- Bug修复：外键错误、lightbox图片不匹配
-
-**项目状态**：
-- Phase 1（基础设施）：✅ 完成
-- Phase 2（图片管理）：✅ 完成
-- Phase 3（标签系统）：✅ 完成
-- Phase 4（智能搜索）：⏳ 待开始
-
-**Location**: `/opt/.openclaw/workspace/external/emohub/`
-
-**Note**: EmoHub使用get-shit-done工具推进，阶段清晰，进度顺利
-
----
-
-## FACT-2026-02-12-02 - EmoHub Phase 4（智能搜索）进展
-**Type**: fact
-**Area**: projects
-
-**进展时间**：2026-02-12 下午
-**提交数量**：6个新提交（共19个）
-
-**Phase 4（智能搜索）完成度**：
-- docs(04): 研究领域完成✅
-- 04-01: 文本搜索（按文件名、标签名）✅
-- 响应式布局：移动端sidebar✅
-
-**技术实现**：
-- 前端：搜索输入（防抖）、响应式布局（移动端sidebar）
-- 后端：按文件名、标签名搜索
-- Bug修复：lightbox无限循环、外键错误
-
-**项目状态**：
-- Phase 1（基础设施）：✅ 完成
-- Phase 2（图片管理）：✅ 完成
-- Phase 3（标签系统）：✅ 完成
-- Phase 4（智能搜索）：🚧 进行中（文本搜索完成）
-
-**Note**: EmoHub使用get-shit-done推进，阶段清晰，文本搜索已完成
-
----
-
-## FACT-2026-02-12-03 - EmoHub v1.0 MVP完成
-**Type**: fact
-**Area**: projects
-
-**完成时间**：2026-02-12 下午
-**提交数量**：19个提交
-
-**v1.0 MVP功能**：
-- Phase 1（基础设施）：✅ 完成
-- Phase 2（图片管理）：✅ 完成
-- Phase 3（标签系统）：✅ 完成
-- Phase 4（智能搜索）：✅ 完成
-
-**核心功能**：
-- ✅ 图片上传、展示、删除（单张/批量）
-- ✅ 标签系统（多标签、分类、管理）
-- ✅ 智能搜索（文本搜索、按文件名/标签名）
-- ✅ 响应式布局（桌面端双栏、移动端sidebar）
-- ✅ 完整的UI组件（ImageGrid、TagManager、TagFilter、ImageToolbar）
-
-**技术栈**：
-- 前端：React 18 + TypeScript + Vite + Tailwind CSS
-- 状态管理：Zustand（imageStore、tagStore）
-- 后端：Node.js 22 + Fastify 4 + Prisma + SQLite
-- 包管理：bun@1.3.9
-
-**Location**: `/opt/.openclaw/workspace/external/emohub/`
-
-**Note**: 使用get-shit-done工具推进，阶段清晰，进度顺利。Milestone v1.1 UX Polish进行中。
-
----
-
-## FACT-2026-02-12-04 - EmoHub Milestone v1.1 UX Polish开始
-**Type**: fact
-**Area**: projects
-
-**开始时间**：2026-02-12 晚上
-**提交数量**：5个新提交
-
-**Milestone v1.1 UX Polish路线图**（5个阶段）：
-- Phase 1: 设置界面
-- Phase 2: 用户体验优化
-- Phase 3: 错误处理和加载状态
-- Phase 4: 性能优化
-- Phase 5: 文档和测试
-
-**项目状态**：
-- Milestone v1.0 MVP：✅ 完成（19个提交）
-- Milestone v1.1 UX Polish：🚧 进行中
-  - docs: 创建milestone v1.1路线图（5个阶段）
-  - docs: 定义v1.1需求
-  - docs(05): 研究Phase 5领域
-  - 准备开始Phase 5
-
-**Location**: `/opt/.openclaw/workspace/external/emohub/`
-
-**Note**: 使用get-shit-done工具推进，v1.0 MVP完成，v1.1 UX Polish进行中。
-
----
-
-## FACT-2026-02-12-05 - EmoHub Phase 5（设置界面）完成
-**Type**: fact
-**Area**: projects
-
-**完成时间**：2026-02-12 晚上
-**提交数量**：8个新提交（共21个）
-
-**Phase 5（设置界面）完成度**：
-- docs(05): create phase plan✅
-- 05-01: 设置基础（设置页面、设置表单、设置导航）✅
-- 设置导航和CSS变量✅
-- settingsStore（持久化中间件）✅
-
-**技术实现**：
-- 设置页面：SettingsForm组件
-- 设置路由：/settings页面
-- CSS变量：主题系统
-- 状态管理：settingsStore（Zustand + persist）
-
-**Location**: `/opt/.openclaw/workspace/external/emohub/`
-
-**Note**: 使用get-shit-done工具推进，Phase 5完成。
-
----
-
-## FACT-2026-02-12-06 - EmoHub Phase 6（深色模式）完成
-**Type**: fact
-**Area**: projects
-
-**完成时间**：2026-02-12 晚上
-**提交数量**：10个新提交（共29个）
-
-**Phase 6（深色模式）完成度**：
-- docs(06): research dark mode implementation✅
-- docs(06-dark-mode): create phase plan✅
-- docs(06-01): complete dark mode foundation plan✅
-- docs(06-02): complete component theme application plan✅
-- docs(phase-06): complete phase execution✅
-
-**技术实现**：
-- 深色模式：light/dark/system三种主题
-- CSS变量：所有组件硬编码颜色改为CSS变量
-- FOUC防止：内联脚本防止白屏闪烁
-- 语义化颜色：扩展CSS变量调色板（状态颜色等）
-
-**Location**: `/opt/.openclaw/workspace/external/emohub/`
-
-**Note**: 使用get-shit-done工具推进，Phase 6完成。
-
----
-
-## DEC-2026-02-13-01 - MuseSync项目启动（Flutter重写）
-**Type**: decision
-**Area**: projects
-
-**Decision**: 用Flutter重写music-together（音乐同步播放器）
-
-**Reason**:
-- 原RN实现（music-together）音频库bug多（expo-audio不稳定、后台播放问题、蓝牙控制断连）
-- Flutter原生性能：60fps稳定
-- 音频库成熟：just_audio比expo-audio更稳定
-- 实时同步：Dart Isolate更适合处理音频同步
-- 跨平台一致性：iOS/Android完全一致
-
-**Technical Stack**:
-- 前端：Flutter 3.27 + Riverpod + just_audio + audio_session
-- 后端：Node.js 22 + Express + Socket.io（保持原backend）
-- 包管理器：bun@1.3.9
-
-**Project Details**:
-- 原项目：music-together（RN实现，001-realtime-sync-player分支）
-- 新项目：musync-flutter（Flutter重写）
-- 预计时间：2-3周完成核心功能（P0）
-- Location: `/opt/.openclaw/workspace/external/musync-flutter/`
-
-**Features**:
-- 房间管理（P0）：创建、加入、离开、验证房间
-- 播放控制（P0）：播放、暂停、拖动进度、切换歌曲
-- 实时同步（P0）：状态同步、进度同步、版本控制
-- 点歌系统（P0）：添加歌曲、移除歌曲、播放列表
-- 时间同步（P0）：NTP算法、时钟偏差校准
-- 音频播放（P0）：音频流播放、后台播放、蓝牙控制
-
-**Documentation**:
-- SEPC.md：完整技术需求文档（22KB、1307行）
-- 包含系统架构、API设计、数据模型、开发阶段规划（13个阶段）
-
-**Note**: 使用get-shit-done工具推进，13个开发阶段，预计2-3周完成核心功能。
 
 ---
 
@@ -733,7 +308,7 @@ cp -r everything-claude-code/rules/typescript/* ~/.claude/rules/
 - 2026-02-12：EmoHub v1.0 MVP完成，进入v1.1 UX Polish
 - 2026-02-12：EmoHub Phase 5（设置界面）完成
 - 2026-02-12：EmoHub Phase 6（深色模式）完成
-- 2026-02-13：MuseSync项目启动（Flutter重写）
+- 2026-02-16：继续开发musesync（React Native版本），删除Flutter版本
 
 ---
 _持续更新中... (oﾟvﾟ)ノ_

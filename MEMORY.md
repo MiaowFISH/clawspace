@@ -195,7 +195,7 @@
 **Type**: decision
 **Area**: projects
 
-**Decision**: 继续开发musesync（React Native + Expo版本）
+**Decision**: 继续开发musesync（React Native + Expo版本），删除Flutter和旧版本
 
 **Reason**:
 - Flutter学习成本高，JS更顺手
@@ -213,6 +213,11 @@
 - 项目：musesync（React Native + Expo版本）
 - Location: `/opt/.openclaw/workspace/external/musesync/`
 - 当前阶段：Phase 3完成
+
+**Actions**:
+- 删除external/musync-flutter/（Flutter版本）
+- 删除external/music-together/（旧版本）
+- 工作区干净，已同步到origin/main
 
 **Note**: 详细技术文档见项目 `.planning/PROJECT.md`
 
@@ -282,6 +287,45 @@
 
 ---
 
+## PREF-2026-02-16-01 - 技术选型偏好（学习成本优先）
+**Type**: preference
+**Area**: development
+
+**Preference**: 技术栈选择优先考虑学习成本和开发效率
+
+**决策逻辑**:
+- 学习成本 < 开发效率 > 技术先进性
+- 优先选择熟悉的技术栈（JS/TS > Dart/Flutter）
+- 生态系统成熟度和社区支持很重要
+
+**应用案例**:
+- MuseSync：放弃Flutter，选择React Native + Expo（JS更顺手）
+- 工具开发：优先使用Node.js/TypeScript，避免新语言学习成本
+
+**Note**: 新技术栈评估周期 ≥ 1周，确保有足够时间验证
+
+---
+
+## PREF-2026-02-16-02 - 代码质量标准（Git规范）
+**Type**: preference
+**Area**: development
+
+**Preference**: 高标准的代码质量和Git工作流
+
+**标准**:
+- 工作区保持干净：及时commit，不堆积未提交的改动
+- 提交信息规范：遵循conventional commits（feat/fix/chore/docs）
+- 及时同步：重要节点同步到origin/main
+- 代码审查：关键改动需要仔细review
+
+**应用案例**:
+- MuseSync：工作区干净，提交`fix(03): heartbeat/reconnect/room lifecycle overhaul`
+- EmoHub：Milestone v1.0完成，v1.1 UX Polish进行中
+
+**Note**: 质量第一，速度第二
+
+---
+
 ## FACT-2026-02-12-02 - GitHub CLI未登录
 **Type**: fact
 **Area**: tools
@@ -308,7 +352,8 @@
 - 2026-02-12：EmoHub v1.0 MVP完成，进入v1.1 UX Polish
 - 2026-02-12：EmoHub Phase 5（设置界面）完成
 - 2026-02-12：EmoHub Phase 6（深色模式）完成
-- 2026-02-16：继续开发musesync（React Native版本），删除Flutter版本
+- 2026-02-16：MuseSync删除Flutter版本，继续React Native开发
+- 2026-02-16：MEMORY.md清理，详细文档迁移至知识库
 
 ---
 _持续更新中... (oﾟvﾟ)ノ_

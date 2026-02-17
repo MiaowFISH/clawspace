@@ -338,6 +338,69 @@
 
 ---
 
+## INSIGHT-2026-02-17-01 - 记忆管理最佳实践
+**Type**: insight
+**Area**: workflow
+
+**高效模式**：
+- 核心记忆（MEMORY.md）只保留决策、约定、策略、长期事实
+- 详细项目文档、技术文档存储在knowledge/中
+- 每日记忆（memory/YYYY-MM-DD.md）完整记录当天事件
+- 使用clawkb管理技术知识，15个条目覆盖多个项目
+
+**效果**：
+- MEMORY.md从14765字节精简到5703字节（删除约60%）
+- 检索更快速，核心信息更清晰
+- 详细内容通过知识库快速查询
+
+---
+
+## INSIGHT-2026-02-17-02 - 技术选型成功案例
+**Type**: insight
+**Area**: development
+
+**成功经验**：
+- MuseSync：放弃Flutter，选择React Native + Expo
+- 理由：JS/TS更顺手，学习成本低，生态成熟
+- 结果：Phase 3完成，核心功能已实现
+
+**教训**：
+- Flutter学习成本高，浪费开发时间
+- 技术选型应优先考虑学习成本和熟悉程度
+- 新技术栈评估周期应≥1周，确保有足够时间验证
+
+---
+
+## INSIGHT-2026-02-17-03 - 工作区健康度提升
+**Type**: insight
+**Area**: workflow
+
+**最佳实践**：
+- 及时同步到origin/main，避免堆积未提交改动
+- 提交信息规范：feat/fix/chore/docs前缀
+- 工作区保持干净，便于分支管理和协作
+
+**当前状态**（2026-02-17）：
+- 工作区完全干净，无未提交改动
+- MuseSync和EmoHub项目都已同步
+- 最近提交：`fix(03): heartbeat/reconnect/room lifecycle overhaul`
+
+---
+
+## FACT-2026-02-17-01 - 知识库使用统计
+**Type**: fact
+**Area**: tools
+
+**clawkb状态**（2026-02-17）：
+- 总条目数：15
+- 主题数：4
+- Topics：emohub(1), medic(5), tools(2), yesimbot(7)
+- Tags：yesimbot(7), medic(5), architecture(4), interface(3)
+
+**使用频率**：每日查询知识库，技术文档快速检索
+
+---
+
 ## 开始时间线
 - 2026-02-03：首次相识
 - 2026-02-06：正式开始记录记忆

@@ -338,6 +338,28 @@
 
 ---
 
+## FACT-2026-02-21-01 - Gateway安全配置问题
+**Type**: fact
+**Area**: security
+
+**问题**：Gateway使用明文`ws://`协议连接非localhost地址（ws://10.66.0.141:18789）
+
+**风险**：
+- 凭证和聊天数据暴露到网络拦截风险
+- RPC probe失败，CLI无法正常启动
+- OpenClaw status命令报错
+
+**解决方案**：
+1. 改用`wss://`安全协议（需要证书）
+2. 通过SSH隧道连接localhost（推荐）
+3. 修改`~/.openclaw/openclaw.json`配置文件
+
+**优先级**：P0（安全风险，需立即解决）
+
+**状态**：2026年2月21日首次发现，等待喵呜修复
+
+---
+
 ## INSIGHT-2026-02-17-01 - 记忆管理最佳实践
 **Type**: insight
 **Area**: workflow

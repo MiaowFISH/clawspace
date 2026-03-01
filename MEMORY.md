@@ -370,12 +370,42 @@
 - **配置性问题（P2）**: 14天内评估，可选配置可不解决
 
 **量化影响**:
-- P0问题持续3天：健康度-20%（Gateway安全问题）
-- P1问题持续13天：健康度-10%（GitHub CLI未登录）
+- P0问题持续8天：健康度-20%（Gateway安全问题）
+- P1问题持续15天：健康度-15%（GitHub CLI未登录）
+- P2问题持续1天：健康度-5%（memory文件未跟踪）
 
 **Note**: Daily Evolution报告应按问题持续天数降序排列，突出问题严重性
+
+---
+
+## FACT-2026-03-01-02 - 安全警告记录
 **Type**: fact
 **Area**: security
+
+**安全审计时间**: 2026-02-28 19:00
+
+**Warnings**:
+1. **gateway.auth_no_rate_limit**: 没有配置认证速率限制
+   - Fix: 设置gateway.auth.rateLimit
+
+2. **plugins.extensions_no_allowlist**: plugins.allow未设置
+   - Found 2 extensions: qq, qqbot
+   - Fix: 设置plugins.allow明确信任的插件ID
+
+3. **plugins.tools_reachable_permissive_policy**: 插件工具策略过于宽松
+   - 插件在default上下文下可被访问
+   - Fix: 使用restrictive profiles或explicit tool allowlists
+
+**Info**:
+- 攻击面摘要: 0个开放组，1个allowlist组
+- elevated tools: enabled
+- webhooks: disabled
+- internal hooks: enabled
+- browser control: enabled
+
+---
+
+## FACT-2026-02-28-02 - Gateway安全配置问题
 
 **问题**：Gateway使用明文`ws://`协议连接非localhost地址（ws://10.66.0.141:18789）
 
